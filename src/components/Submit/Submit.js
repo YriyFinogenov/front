@@ -8,10 +8,9 @@ class Submit extends React.Component{
 
 
     clickHandler=()=>{
-      if(this.props.validateData()){
-          this.props.sendRequest();
-      }
-      return false;
+      this.props.validateData()
+          .then(()=>this.props.sendRequest())
+          .catch(()=>console.log('some data invalid'));
     };
 
     render(){

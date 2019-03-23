@@ -2,6 +2,7 @@ import React from 'react';
 import Input from '../../components/Input/Input';
 import Submit from '../../components/Submit/Submit';
 import validator from 'validator';
+import {LoginSchem} from '../../validators/ValidationSchems';
 
 
 
@@ -18,6 +19,8 @@ class Registration extends React.Component{
         this.registrationData[target.name]=target.value;
     };
 
+
+
     checkValidInput=(name)=>{
         if(name==='email'){
             if(validator.isEmail(this.registrationData.email))
@@ -33,14 +36,11 @@ class Registration extends React.Component{
 
 
     validateDataRegistration=()=>{
-      if(validator.isEmail(this.registrationData.email)){
-          return true;
-      }
-      return false;
+      return LoginSchem.isValid({email: this.registrationData.email, password: this.registrationData.password})
     };
 
     sendRequest=()=>{
-        console.log('request');
+
     };
 
 

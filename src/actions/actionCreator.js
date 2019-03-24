@@ -7,3 +7,11 @@ export const registerAction=(data)=>{
         data: data
     }
 };
+
+
+export const loginAction=(data)=>{
+    return{
+        type: ACTION.LOGIN_ACTION,
+        data: data
+    }
+};

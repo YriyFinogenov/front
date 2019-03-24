@@ -48,7 +48,7 @@ class LoginForm extends React.Component {
 
     sendRequest = () => {
         this.setValidationStatus();
-        console.log('send request');
+
     };
 
 

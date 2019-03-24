@@ -4,11 +4,14 @@ import Submit from '../../components/Submit/Submit';
 import validator from 'validator';
 import Schem from "../../validators/ValidationSchems";
 import ChoseRole from '../../components/ChoseRole/ChoseRole';
-
+import {connect} from "react-redux";
+import {registerAction} from '../../actions/actionCreator';
+import {Redirect} from 'react-router-dom';
 
 class RegistrationForm extends React.Component {
     constructor(props) {
         super(props);
+        this.errorServer=false;
         this.registrationData = {
             firstName: '',
             lastName: '',
@@ -54,28 +57,21 @@ class RegistrationForm extends React.Component {
 
 
     setValidationStatus = () => {
-        if(this.registrationData.firstName.length===0){
+        if (this.registrationData.firstName.length === 0) {
             alert('First Name cannot be empty');
-        }
-        else if(this.registrationData.lastName.length===0){
+        } else if (this.registrationData.lastName.length === 0) {
             alert('Last Name cannot be empty')
-        }
-        else if(this.registrationData.displayName.length===0){
+        } else if (this.registrationData.displayName.length === 0) {
             alert('Screen Name cannot be empty');
-        }
-        else if(this.registrationData.email.length===0){
+        } else if (this.registrationData.email.length === 0) {
             alert('Email Address cannot be empty');
-        }
-        else if(!validator.isEmail(this.registrationData.email)){
+        } else if (!validator.isEmail(this.registrationData.email)) {
             alert('Email address is wrong');
-        }
-        else if(this.registrationData.password.length===0){
+        } else if (this.registrationData.password.length === 0) {
             alert('Password cannot be empty');
-        }
-        else if(this.registrationData.confirmPassword.length===0){
+        } else if (this.registrationData.confirmPassword.length === 0) {
             alert('Password Confirmation cannot be empty');
-        }
-        else if(this.registrationData.confirmPassword!==this.registrationData.password){
+        } else if (this.registrationData.confirmPassword !== this.registrationData.password) {
             alert('Password not matched');
         }
     };
@@ -95,11 +91,36 @@ class RegistrationForm extends React.Component {
     };
 
     sendRequest = () => {
-        console.log(this.registrationData);
+        const obj={
+            firstname: this.registrationData.firstName,
+            lastname: this.registrationData.lastName,
+            displayname: this.registrationData.displayName,
+            email: this.registrationData.email,
+            password: this.registrationData.password,
+            role: this.registrationData.role
+        };
+        this.props.register(obj);
     };
+
+    componentWillReceiveProps(nextProps, nextContext) {
+      if(nextProps.error){
+          if(nextProps.error.status===409){
+              alert('User with this email already exist!');
+          }
+          else{
+              this.errorServer=true;
+          }
+      }
+      if(nextProps.accessToken){
+          localStorage.setItem('accessToken',nextProps.accessToken);
+      }
+    }
 
 
     render() {
+        if(this.props.success){
+            return <Redirect to='/'/>
+        }
         return (
             <div className="registrationFormContainer">
                 <Input inputType='text' placeholder='input first Name' setValue={this.setValue} name='firstName'
@@ -116,11 +137,21 @@ class RegistrationForm extends React.Component {
                        error='Password confirmation needs to match original password'
                        checkValidInput={this.checkValidInput}/>
                 <ChoseRole name='role' setValue={this.setValue}/>
-                <Submit validateData={this.validateDataRegistration} sendRequest={this.sendRequest}
-                        setValidationStatus={this.setValidationStatus}/>
+                <Submit validateData={this.validateDataRegistration} sendRequest={this.sendRequest} setValidationStatus={this.setValidationStatus}/>
+                {this.errorServer && <span>Server trouble</span>}
             </div>
         )
     }
 }
 
-export default RegistrationForm;
+
+const mapStateToProps = (state) => {
+    return state.registration;
+};
+
+const mapDispatchToProps = (dispatch) => (
+    {register: (data)=>dispatch(registerAction(data))}
+);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);

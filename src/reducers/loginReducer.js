@@ -1,16 +1,17 @@
 import ACTION from '../actions/actionTypes';
 
+
 const intialState = {
-    accessToken: null,
     isFetching: false,
     error: null,
+    accessToken: null,
     success: false
 };
 
-export default function (state = intialState, action) {
-    switch (action.type) {
-        case ACTION.REGISTER_ACTION_REQUEST: {
-            return {
+export default function (state=intialState,action){
+    switch(action.type){
+        case ACTION.LOGIN_ACTION_REQUEST: {
+            return{
                 isFetching: true,
                 error: null,
                 accessToken: null,
@@ -18,22 +19,20 @@ export default function (state = intialState, action) {
             }
         }
         case ACTION.REGISTER_ACTION_SUCCESS: {
-            return {
-                accessToken: action.accessToken,
+            return{
                 isFetching: false,
                 error: null,
+                accessToken: action.accessToken,
                 success: true
             }
         }
-        case ACTION.REGISTER_ACTION_ERROR: {
-            return {
+        case ACTION.LOGIN_ACTION_ERROR: {
+            return{
                 isFetching: false,
                 error: action.error,
                 accessToken: null,
                 success: false
             }
         }
-        default:
-            return state;
     }
 }

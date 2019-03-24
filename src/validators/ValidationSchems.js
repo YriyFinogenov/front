@@ -9,6 +9,7 @@ export default {
     RegistrationSchem: yup.object().shape({
         email: yup.string().email().required(),
         password: yup.string().required(),
+        confirmPassword: yup.string().required().oneOf([yup.ref('password'),null]),
         firstname: yup.string().required(),
         lastname: yup.string().required(),
         displayname: yup.string().required(),

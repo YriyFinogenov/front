@@ -15,3 +15,11 @@ export const loginAction=(data)=>{
         data: data
     }
 };
+
+
+export const checkTokenAction=(data)=>{
+  return{
+      type: ACTION.CHECK_TOKEN_ACTION,
+      token: data
+  }
+};

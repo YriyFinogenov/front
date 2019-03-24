@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './ChoseRole.sass';
 
 class ChoseRole extends React.Component{
     constructor(props){
@@ -28,15 +28,21 @@ class ChoseRole extends React.Component{
 
     render(){
         return(
-            <div className="choseRole">
-                <div onClick={this.changeRole}>
-                    <input type="checkbox" checked={this.state.isBuyer}/>
-                    <span>Join As a Buyer </span>
-                </div>
-                <div onClick={this.changeRole}>
-                    <input type="checkbox" checked={this.state.isCreator} />
-                    <span>Join As a Creative </span>
-                </div>
+            <div className="choseRoleContainer">
+                    <div onClick={this.changeRole} className="choseRole">
+                        <input type="checkbox" checked={this.state.isBuyer}/>
+                        <div className="infoRoleContainer">
+                            <span className='roleR'>Join As a Buyer </span>
+                            <span className='roleInfo'>I am looking for a Name, Logo or Tagline for my business, brand or product.</span>
+                        </div>
+                    </div>
+                    <div onClick={this.changeRole} className="choseRole">
+                        <input type="checkbox" checked={this.state.isCreator} />
+                        <div className="infoRoleContainer">
+                            <span className='roleR'>Join As a Creative </span>
+                            <span className='roleInfo'>I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.</span>
+                        </div>
+                    </div>
             </div>
         )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Submit.sass';
 
 class Submit extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class Submit extends React.Component {
     render() {
         return (
             <div className="submitContainer" onClick={this.clickHandler}>
-                Send Data
+                <span>Create Account</span>
             </div>
         )
     }

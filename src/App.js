@@ -9,24 +9,11 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-             <li>
-                 <Link to='/registration'>Registration</Link>
-             </li>
-              <li>
-                  <Link to='/onlyLoginUsers'>Only for Loginned Users</Link>
-              </li>
-          </ul>
-        </nav>
         <Switch>
           <Route exact path='/'/>
-          <Route path='/login' component={LoginPage}/>
-          <Route path='/registration' component={RegistrationPage}/>
-          <Route path='/onlyLoginUsers' component={LoginnedUsers}/>
+          <Route exact path='/login' component={LoginPage}/>
+          <Route exact path='/registration' component={RegistrationPage}/>
+          <Route exact path='/onlyLoginUsers' component={LoginnedUsers}/>
         </Switch>
       </Router>
     );

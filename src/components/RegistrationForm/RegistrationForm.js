@@ -7,6 +7,7 @@ import ChoseRole from '../../components/ChoseRole/ChoseRole';
 import {connect} from "react-redux";
 import {registerAction} from '../../actions/actionCreator';
 import {Redirect} from 'react-router-dom';
+import './RegistrationForm.sass';
 
 class RegistrationForm extends React.Component {
     constructor(props) {
@@ -123,20 +124,32 @@ class RegistrationForm extends React.Component {
         }
         return (
             <div className="registrationFormContainer">
-                <Input inputType='text' placeholder='input first Name' setValue={this.setValue} name='firstName'
-                       error='must be' checkValidInput={this.checkValidInput}/>
-                <Input inputType='text' placeholder='input last Name' setValue={this.setValue} name='lastName'
-                       error='must be' checkValidInput={this.checkValidInput}/>
-                <Input inputType='text' placeholder='input display Name' setValue={this.setValue} name='displayName'
-                       error='must be' checkValidInput={this.checkValidInput}/>
-                <Input inputType='text' placeholder='input email' setValue={this.setValue} name='email'
-                       error='must be email' checkValidInput={this.checkValidInput}/>
-                <Input inputType='text' placeholder='input password' setValue={this.setValue} name='password' error=''
+                <div className="signupInfoContainer">
+                    <span className='createAnAccount'>
+                        CREATE AN ACCOUNT
+                     </span>
+                    <span className='privateInfo'>
+                         We always keep your name and email address private.
+                    </span>
+                </div>
+                <Input inputType='text' placeholder='First Name' setValue={this.setValue} name='firstName'
+                       error='Field cannot be empty' checkValidInput={this.checkValidInput}/>
+                <Input inputType='text' placeholder='Last Name' setValue={this.setValue} name='lastName'
+                       error='Field cannot be empty' checkValidInput={this.checkValidInput}/>
+                <Input inputType='text' placeholder='Display Name' setValue={this.setValue} name='displayName'
+                       error='Display name should be more than 4 characters' checkValidInput={this.checkValidInput}/>
+                <Input inputType='text' placeholder='Email Address' setValue={this.setValue} name='email'
+                       error='Please check the format of email address' checkValidInput={this.checkValidInput}/>
+                <Input inputType='text' placeholder='Password' setValue={this.setValue} name='password' error='Field cannot be empty'
                        checkValidInput={this.checkValidInput}/>
-                <Input inputType='text' placeholder='confirm password' setValue={this.setValue} name='confirmPassword'
+                <Input inputType='text' placeholder='Password Confirmation' setValue={this.setValue} name='confirmPassword'
                        error='Password confirmation needs to match original password'
                        checkValidInput={this.checkValidInput}/>
                 <ChoseRole name='role' setValue={this.setValue}/>
+                <div className="allowMailing">
+                    <input type='checkbox'></input>
+                    <span>Allow Squadhelp to send marketing/promotional offers from time to time</span>
+                </div>
                 <Submit validateData={this.validateDataRegistration} sendRequest={this.sendRequest} setValidationStatus={this.setValidationStatus}/>
                 {this.errorServer && <span>Server trouble</span>}
             </div>

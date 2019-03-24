@@ -8,18 +8,18 @@ const intialState = {
     success: false
 };
 
-export default function (state=intialState,action){
-    switch(action.type){
+export default function (state = intialState, action) {
+    switch (action.type) {
         case ACTION.LOGIN_ACTION_REQUEST: {
-            return{
+            return {
                 isFetching: true,
                 error: null,
                 accessToken: null,
                 success: false
             }
         }
-        case ACTION.REGISTER_ACTION_SUCCESS: {
-            return{
+        case ACTION.LOGIN_ACTION_SUCCESS: {
+            return {
                 isFetching: false,
                 error: null,
                 accessToken: action.accessToken,
@@ -27,12 +27,14 @@ export default function (state=intialState,action){
             }
         }
         case ACTION.LOGIN_ACTION_ERROR: {
-            return{
+            return {
                 isFetching: false,
                 error: action.error,
                 accessToken: null,
                 success: false
             }
         }
+        default:
+            return state;
     }
 }

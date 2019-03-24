@@ -16,7 +16,7 @@ class Submit extends React.Component {
                     throw new Error();
                 }
             })
-            .catch(() => this.props.setValidationStatus(false));
+            .catch(() => this.props.setValidationStatus());
     };
 
     render() {

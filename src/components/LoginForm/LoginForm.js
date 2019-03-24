@@ -1,73 +1,66 @@
 import React from 'react';
-import Input from '../Input/Input';
+import LoginInput from '../LoginInput/LoginInput';
 import Submit from '../Submit/Submit';
 import validator from 'validator';
 import Schem from '../../validators/ValidationSchems';
 
 
-
-class LoginForm extends React.Component{
-    constructor(props){
+class LoginForm extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={
-          isValid: true
+        this.state = {
+            inValidEmail: false,
+            inValidPassword: false
         };
-        this.loginData={
+        this.loginData = {
             'email': '',
             'password': ''
         }
     }
 
-    setValue=(target)=>{
-        this.loginData[target.name]=target.value;
+    setValue = (target) => {
+        this.loginData[target.name] = target.value;
     };
 
 
-
-    checkValidInput=(name)=>{
-        this.setValidationStatus(true);
-        if(name==='email'){
-            if(validator.isEmail(this.loginData.email))
-                return true;
-            return false;
-        }
-        else if(name==='password'){
-            if(this.loginData.password.length===0)
-                return false;
-            return true;
-        }
-    };
-
-    setValidationStatus=(status)=>{
-        if(status && !this.state.isValid){
+    setValidationStatus = () => {
+        if (!validator.isEmail(this.loginData.email)) {
             this.setState({
-                isValid: true
-            })
-        }
-        if(!status && this.state.isValid){
+                inValidEmail: true
+            });
+        } else if (this.loginData.password.length === 0) {
             this.setState({
-                isValid: false
-            })
+                inValidPassword: true,
+                inValidEmail: false
+            });
+        } else {
+            this.setState({
+                inValidPassword: false,
+                inValidEmail: false
+            });
         }
     };
 
 
-    validateDataRegistration=()=>{
-      return Schem.LoginSchem.isValid({email: this.loginData.email, password: this.loginData.password})
+    validateDataRegistration = () => {
+        return Schem.LoginSchem.isValid({email: this.loginData.email, password: this.loginData.password})
     };
 
-    sendRequest=()=>{
+    sendRequest = () => {
+        this.setValidationStatus();
         console.log('send request');
     };
 
 
-    render(){
-        return(
+    render() {
+        return (
             <div className="LoginFormContainer">
-                <Input inputType='text' placeholder='input email' setValue={this.setValue} name='email' error='' checkValidInput={this.checkValidInput}/>
-                <Input inputType='password' placeholder='input password' setValue={this.setValue} name='password' error='' checkValidInput={this.checkValidInput}/>
-                <Submit validateData={this.validateDataRegistration} sendRequest={this.sendRequest} setValidationStatus={this.setValidationStatus}/>
-                {!this.state.isValid && <span>Some data are invalid</span>}
+                <LoginInput inputType='text' placeholder='input email' setValue={this.setValue} name='email'/>
+                {this.state.inValidEmail && <span>Email is not valid format</span>}
+                <LoginInput inputType='password' placeholder='input password' setValue={this.setValue} name='password'/>
+                {this.state.inValidPassword && <span>Password cannot be empty</span>}
+                <Submit validateData={this.validateDataRegistration} sendRequest={this.sendRequest}
+                        setValidationStatus={this.setValidationStatus}/>
             </div>
         )
     }
